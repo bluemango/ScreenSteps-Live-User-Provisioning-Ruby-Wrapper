@@ -7,109 +7,110 @@ This library users ActiveResource to interact with the ScreenSteps Live User Pro
 To setup do the following:
 
 <pre>
-  require 'sslive_provisioning'
-  SsliveProvisioning.account = 'youraccount'
-  SsliveProvisioning.user = 'username'
-  SsliveProvisioning.password = 'your_password'
+require 'sslive_provisioning'
+SsliveProvisioning.account = 'youraccount'
+SsliveProvisioning.user = 'username'
+SsliveProvisioning.password = 'your_password'
 </pre>
 
 h3. Examples
 
-h4. Create a user
+Create a user
 
-# Required parameters: login, email, password, password_confirmation, role
-# role can be one of admin, author, editor, reader, api access
-# Optional parameters: first_name, last_name, time_zone
+Required parameters: login, email, password, password_confirmation, role
+role can be one of admin, author, editor, reader, api access
+Optional parameters: first_name, last_name, time_zone
 
-# Pass in :send_new_user_email => "1" if you want notifcations to be sent to new users once they are created.
+Pass in :send_new_user_email => "1" if you want notifcations to be sent to new users once they are created.
 
 <pre>
-  SsliveProvisioning::User.create(:login => "login",
-                               :email => "mail@mail.com",
-                               :password => "password",
-                               :password_confirmation => "password",
-                               :role => "reader"
-                               )
+SsliveProvisioning::User.create(:login => "login",
+                             :email => "mail@mail.com",
+                             :password => "password",
+                             :password_confirmation => "password",
+                             :role => "reader"
+                             )
 </pre>
       
-# quick user find options
+quick user find options
 
 <pre>
-  SsliveProvisioning::User.find_by_login(login)
-  SsliveProvisioning::User.find_by_email(email)
+SsliveProvisioning::User.find_by_login(login)
+SsliveProvisioning::User.find_by_email(email)
 </pre>
 
-# update a user's password
+update a user's password
 
 <pre>
 user = SsliveProvisioning::User.find_by_email('mail@mail.com')
 user.update_password("newpassword")
 </pre>
 
-# get readers, admins, editors, etc. for an account
+get readers, admins, editors, etc. for an account
 
 <pre>
-  SsliveProvisioning::User.readers
-  SsliveProvisioning::User.api_access_users
-  SsliveProvisioning::User.admins
-  SsliveProvisioning::User.authors
-  SsliveProvisioning::User.editors                         
+SsliveProvisioning::User.readers
+SsliveProvisioning::User.api_access_users
+SsliveProvisioning::User.admins
+SsliveProvisioning::User.authors
+SsliveProvisioning::User.editors                         
 </pre>
 
-# Create a group
+Create a group
 
-# Required parameters: title
+Required parameters: title
 
 <pre>SsliveProvisioning::Group.create(:title => "My Group")</pre>         
 
-# Add a user to a group (must have a role of reader or api access)
+Add a user to a group (must have a role of reader or api access)
 
 <pre>
-  user = SsliveProvisioning::User.find_by_login("bob")
-  group = SsliveProvisioning::Group.find_by_title("My Group")
-  group.add_user(user)
+user = SsliveProvisioning::User.find_by_login("bob")
+group = SsliveProvisioning::Group.find_by_title("My Group")
+group.add_user(user)
 </pre>
 
-# remove the user
+remove the user
 
 <pre>group.remove_user(user)</pre>
 
+Add a user to a space (must have a role of reader or api access)
 
-# Add a user to a space (must have a role of reader or api access)
 <pre>
-  space = SsliveProvisioning::Space.find("#{id}")
-  space.add_user(user)
+space = SsliveProvisioning::Space.find("#{id}")
+space.add_user(user)
 </pre>
-# remove the user
+
+remove the user
 
 <pre>space.remove_user(user)</pre>
 
-## Add a group to a space
+Add a group to a space
 
 <pre>space.add_group(group)</pre>
 
-# remove the group
+remove the group
 
 <pre>space.remove_group(group)</pre>
 
-# see spaces a reader or api access user can access
+see spaces a reader or api access user can access
 
 <pre>
-  user = SsliveProvisioning::User.find_by_email('mail@mail.com')
-  user.viewable_spaces
+user = SsliveProvisioning::User.find_by_email('mail@mail.com')
+user.viewable_spaces
 </pre>
 
-# see groups for a suer
+see groups for a suer
 
 <pre>user.groups</pre>
 
-# see spaces for a group
+see spaces for a group
 
 <pre>
-  group = SsliveProvisioning::Group.find_by_title('My Group')
-  group.spaces
+group = SsliveProvisioning::Group.find_by_title('My Group')
+group.spaces
 </pre>
 
-# see users for a group
+see users for a group
 
 <pre>group.users</pre>
